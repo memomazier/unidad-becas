@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Becas +</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xwPpg3fXqL9Lj6cGQ6k4X6cX4i+5SFXQaHfV6+l06e4hDfa5KXrr1bcQy+1kQh4FqNLmK++F2vpu6YmT2oV9dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 60px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo img {
+      height: 80px;   /* ajusta el tamaño del logo */
+      width: auto;    /* mantiene la proporción */
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05); /* un pequeño efecto al pasar el mouse */
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #2a2a2a;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2a2a2a;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    /* Animación subrayado */
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 3px;
+      background: #4e73df;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: #4e73df;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #fff;
+      min-width: 180px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #2a2a2a;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #f4f6f9;
+      color: #4e73df;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botones */
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-donar {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 3px 8px rgba(255,107,107,0.4);
+    }
+
+    .btn-donar:hover {
+      background: #ff4d4d;
+      transform: translateY(-2px);
+    }
+
+    .btn-ingresar {
+      background: #4e73df;
+      color: white;
+      box-shadow: 0 3px 8px rgba(78,115,223,0.4);
+    }
+
+    .btn-ingresar:hover {
+      background: #3755c5;
+      transform: translateY(-2px);
+    }
+    
+    :root{
+      --bg:#0a0a0a;
+      --text:#ffffff;
+      --muted:#dbe7ff;
+      --blue:#2d8cff;
+      --blue2:#5aa0ff;
+      --grad: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+    /* Hero Section */
+.hero {
+  position: relative;
+  height: 60vh; /* no pantalla completa, solo un bloque */
+  background: url("imagenes/carrusel11.jpg") center/cover no-repeat; /* tu imagen de fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Filtro oscuro encima de la imagen */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* filtro oscuro */
+}
+
+/* Contenido del hero */
+.hero-content {
+  position: relative; /* para que quede sobre el filtro */
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Barrita decorativa debajo del título */
+.underline {
+  width: 80px;
+  height: 4px;
+  background-color: #2ecc71; /* color de la barrita */
+  margin: 0 auto 20px auto;
+  border-radius: 2px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    height: 40vh;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+/* Sección de texto e imagen */
+.info-section {
+  padding: 80px 20px;
+  background: #f9f9f9; /* gris claro para contraste */
+  font-family: Arial, sans-serif;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.info-text {
+  flex: 1;
+  min-width: 300px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.info-text p {
+  margin-bottom: 20px;
+}
+
+.info-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.info-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.info-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .info-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-image img {
+    margin-top: 20px;
+  }
+}
+.animado {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+  }
+
+  .animado.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Grupo Meta Section */
+.grupo-meta {
+  background: #0b2f66; /* azul oscuro */
+  color: #fff;
+  padding: 80px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.grupo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grupo-meta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+.grupo-meta h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #2ecc71; /* barrita verde */
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.grupo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.grupo-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px 20px;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+/* Animación al pasar mouse */
+.grupo-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grupo-meta h2 {
+    font-size: 2rem;
+  }
+  .grupo-card {
+    font-size: 1rem;
+    padding: 20px 15px;
+  }
+}
+/* Historias de Éxito */
+.historias-section {
+  background: #fff;
+  padding: 80px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.historias-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.historias-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #0b2f66;
+  position: relative;
+  display: inline-block;
+}
+
+.historias-section h2::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: #2ecc71;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.historia-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.historia-foto img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+.historia-texto {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.historia-card h3 {
+  font-size: 1.3rem;
+  color: #0b2f66;
+  margin-bottom: 5px;
+}
+
+.historia-datos {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Estilo flechas */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #0b2f66;
+  transition: transform 0.2s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.2);
+}
+/* Sección Logros */
+.logros-section {
+  background: #0b2f66; /* Azul oscuro */
+  color: #fff;
+  padding: 80px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.logros-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.logros-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #fff;
+  position: relative;
+}
+
+.logros-section h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #2ecc71;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.logros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.logro {
+  background: rgba(255,255,255,0.05);
+  padding: 30px 20px;
+  border-radius: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.logro:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.logro-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #2ecc71;
+  animation: bounce 2s infinite;
+}
+
+/* Animación íconos */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.logro p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* SECCION DE DONACIONES */
+.donate-section {
+  position: relative;
+  padding: 120px 20px;
+  background: #0b1d3a; /* azul oscuro */
+  overflow: hidden;
+  text-align: center;
+  border-radius: 20px;
+  color: #fff;
+}
+
+
+/* Iconos grandes */
+.piggy-left, .piggy-right {
+  position: absolute;
+  width: 220px;
+  opacity: 0.15;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: float 6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.piggy-left { left: 40px; animation-delay: 0s; }
+.piggy-right { right: 40px; animation-delay: 3s; }
+
+/* Contenido centrado */
+.donate-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.donate-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.donate-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 35px;
+  font-weight: 400;
+}
+
+.donate-btn {
+  background: #2eaccc;
+  color: #fff;
+  font-weight: bold;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 20px rgba(46, 204, 191, 0.3);
+  transition: all 0.3s ease;
+}
+
+.donate-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(46, 204, 183, 0.5);
+}
+
+/* Animación flotante de alcancías */
+@keyframes float {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-60%) translateX(10px); }
+}
+
+/* Animación de entrada desde abajo */
+.animado .donate-content {
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+.animado.visible .donate-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+.custom-footer {
+  background-color: #000000; /* azul oscuro */
+  color: #fff;
+  padding: 60px 20px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  max-width: 80px;
+  display: block;
+  margin: auto 0;
+}
+
+.footer-center {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+.footer-center p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.footer-socials a {
+  margin: 0 8px;
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+  color: #2ecc71;
+}
+
+.footer-contact {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-contact h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.footer-contact p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 15px;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-contact {
+    margin-top: 30px;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo" />
+    </div>
+
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="dropdown">
+        <a href="becas+.html">Becas +</a>
+        </div>
+      </li>
+      <li><a href="pasantias.html">Pasantías</a></li>
+      <li><a href="practicas.html">Prácticas Profesionales</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      <a href="donaciones.html" target="blank" class="btn btn-donar">Donar</a>
+      <a href="ingresar.html" target="blank" class="btn btn-ingresar">Ingresar</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>BECAS +</h1>
+    <div class="underline"></div>
+    <p>Educación y oportunidades para los jóvenes más vulnerables de Honduras.</p>
+  </div>
+</section>
+
+<!-- Sección de texto e imagen -->
+<section class="info-section animado">
+  <div class="info-container animado">
+    <div class="info-text animado">
+      <p>
+        Beca+ es una iniciativa innovadora de ASONOG que responde a las necesidades educativas de jóvenes agentes de cambio. Nuestro compromiso es impulsar la educación y el desarrollo de las comunidades hondureñas a través de formación complementaria en habilidades socioemocionales, liderazgos, derechos humanos, género, cambio climático y migración que generen un impacto positivo en sus comunidades.
+      </p>
+    </div>
+    <div class="info-image animado">
+      <img src="imagenes/carrusel4.jpeg" alt="Estudiantes becados">
+    </div>
+  </div>
+</section>
+
+
+<!-- Grupo Meta Section -->
+<section class="grupo-meta animado">
+  <div class="grupo-container animado">
+    <h2>Grupo Meta</h2>
+    <div class="grupo-grid animado">
+      <div class="grupo-card">Madres Solteras</div>
+      <div class="grupo-card">Mujeres víctimas de violencia</div>
+      <div class="grupo-card">Jóvenes vulnerables</div>
+      <div class="grupo-card">Jóvenes migrantes</div>
+      <div class="grupo-card">Desplazados internos</div>
+      <div class="grupo-card">Afrodescendientes</div>
+      <div class="grupo-card">Personas con discapacidad</div>
+      <div class="grupo-card">Pueblos originarios</div>
+      <div class="grupo-card">Otros</div>
+    </div>
+  </div>
+</section>
+
+<!-- CDN Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Historias de Éxito -->
+<section class="historias-section">
+  <div class="historias-container">
+    <h2>Historias de Éxito</h2>
+
+    <!-- Slider -->
+    <div class="swiper historias-slider">
+      <div class="swiper-wrapper">
+        
+        <!-- Historia 1 -->
+        <div class="swiper-slide historia-card">
+          <div class="historia-foto">
+            <img src="https://picsum.photos/300/300?1" alt="Persona 1">
+          </div>
+          <p class="historia-texto">
+            Soy egresado de Ingeniería Mecatrónica y el primero en mi familia con un título universitario. 
+            Gracias a la beca participé en eventos internacionales como la Spaceport America Cup 2023.
+          </p>
+          <h3>Marco Antonio García</h3>
+          <p class="historia-datos">Ingeniería Mecatrónica<br>UNAH</p>
+        </div>
+
+        <!-- Historia 2 -->
+        <div class="swiper-slide historia-card">
+          <div class="historia-foto">
+            <img src="https://picsum.photos/300/300?2" alt="Persona 2">
+          </div>
+          <p class="historia-texto">
+            Gracias al programa pude continuar mis estudios de Medicina y hoy apoyo a comunidades rurales 
+            con atención médica gratuita.
+          </p>
+          <h3>Laura Hernández</h3>
+          <p class="historia-datos">Medicina<br>Universidad de San Pedro Sula</p>
+        </div>
+
+        <!-- Historia 3 -->
+        <div class="swiper-slide historia-card">
+          <div class="historia-foto">
+            <img src="https://picsum.photos/300/300?3" alt="Persona 3">
+          </div>
+          <p class="historia-texto">
+            Con la beca pude completar mis estudios de Derecho y ahora trabajo en proyectos de defensa de 
+            los derechos humanos.
+          </p>
+          <h3>Carlos Mejía</h3>
+          <p class="historia-datos">Derecho<br>Universidad Nacional Autónoma de Honduras</p>
+        </div>
+
+      </div>
+
+      <!-- Flechas -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AOS (animaciones al hacer scroll) -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Sección Logros -->
+<section class="logros-section">
+  <div class="logros-container">
+    <h2>Logros</h2>
+
+    <div class="logros-grid">
+      <!-- Logro 1 -->
+      <div class="logro" data-aos="fade-up" data-aos-delay="100">
+        <i class="fa-solid fa-graduation-cap logro-icon"></i>
+        <p>Fomento y acceso a la salud mental y el empoderamiento de lideresas y líderes comunitarios.</p>
+      </div>
+
+      <!-- Logro 2 -->
+      <div class="logro" data-aos="fade-up" data-aos-delay="200">
+        <i class="fa-solid fa-globe logro-icon"></i>
+        <p>Intercambio de conocimientos, experiencias y buenas prácticas entre las becarias y becarios.</p>
+      </div>
+
+      <!-- Logro 3 -->
+      <div class="logro" data-aos="fade-up" data-aos-delay="300">
+        <i class="fa-solid fa-briefcase logro-icon"></i>
+        <p>Reducción de la desigualdad económica y social.</p>
+      </div>
+
+      <!-- Logro 4 -->
+      <div class="logro" data-aos="fade-up" data-aos-delay="400">
+        <i class="fa-solid fa-people-group logro-icon"></i>
+        <p>Espacios de incidencia en la defensa de los derechos humanos, cambio social, política, medio ambiente, género.</p>
+      </div>
+
+      <!-- Logro 5 -->
+      <div class="logro" data-aos="fade-up" data-aos-delay="500">
+        <i class="fa-solid fa-award logro-icon"></i>
+        <p>Mejora de las condiciones de vida de las comunidades de las becarias y becarios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="donate-section">
+    <!-- Iconos grandes de alcancía -->
+    <img src="imagenes/alcancía png.png" class="piggy-left" alt="Alcancía izquierda">
+    <img src="imagenes/alcancía png.png" class="piggy-right" alt="Alcancía derecha">
+
+    <div class="donate-content animado">
+      <h2 class="donate-title animado">Haz tu donación, cambia una vida.</h2>
+      <p class="donate-subtitle animado">Tú puedes impulsar grandes historias.</p>
+      <button class="donate-btn animado">Donar ahora</button>
+    </div>
+  </section>
+
+  <footer class="custom-footer">
+    <div class="footer-container">
+      <!-- Logo a la izquierda -->
+      <div class="footer-logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo ASONOG">
+      </div>
+
+      <!-- Texto y redes al centro -->
+      <div class="footer-center">
+        <p>La unidad de becas, pasantías y prácticas profesionales de ASONOG apoya a jóvenes agentes de cambio en Honduras para impulsar sueños y transformar territorios.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/ASONOG" class="hover:text-gray-200"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/asonog_honduras/" class="hover:text-gray-200"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/AsonogOficial" class="hover:text-gray-200"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/asonog/" class="hover:text-gray-200"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.tiktok.com/@asonog" class="hover:text-gray-200"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@asonog8695" class="hover:text-gray-200"><i class="fab fa-youtube"></i></a>
+          <a href="https://open.spotify.com/show/6WZ4EBVvxoRgtfxbaNbyEP?si=19546effe2bc469b" class="hover:text-gray-200"><i class="fab fa-spotify"></i></a>
+        </div>
+      </div>
+
+      <!-- Contactos a la derecha -->
+      <div class="footer-contact">
+        <h3>Contáctanos</h3>
+        <p><i class="fas fa-location-dot"></i> ASONOG, Barrio El Calvario, Santa Rosa de Copán, Honduras.</p>
+        <p><i class="fas fa-phone"></i> +504 2662-2626</p>
+        <p><i class="fas fa-envelope"></i> karolina.lara@asonog.hn</p>
+        <p><i class="fas fa-envelope"></i> direccion@asonog.hn</p>
+        <p><i class="fas fa-globe"></i> <a href="https://www.asonog.hn" target="_blank">www.asonog.hn</a></p>
+      </div>
+    </div>
+
+    <!-- Derechos reservados -->
+    <div class="footer-bottom">
+      © 2025 Unidad de Becas ASONOG. Todos los derechos reservados.
+    </div>
+  </footer>
+
+<script>
+  AOS.init({
+    duration: 1000,  // Velocidad de animación
+    once: true       // La animación se ejecuta una sola vez
+  });
+</script>
+
+
+<!-- Script de Swiper -->
+<script>
+  var swiper = new Swiper(".historias-slider", {
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    loop: true,
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 1,
+  });
+</script>
+
+  <script>
+// Un solo Observer para todo
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      } else {
+        entry.target.classList.remove("visible"); // Para que reaparezca al bajar/subir
+      }
+    });
+  }, { threshold: 0.2 });
+
+  // Detecta todos los elementos que tengan la clase .animado
+  document.querySelectorAll('.animado').forEach(el => observer.observe(el));
+
+</script>
+
+
+</body>
+</html>

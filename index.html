@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad de Becas</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xwPpg3fXqL9Lj6cGQ6k4X6cX4i+5SFXQaHfV6+l06e4hDfa5KXrr1bcQy+1kQh4FqNLmK++F2vpu6YmT2oV9dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 60px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo img {
+      height: 80px;   /* ajusta el tamaño del logo */
+      width: auto;    /* mantiene la proporción */
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05); /* un pequeño efecto al pasar el mouse */
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #2a2a2a;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2a2a2a;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    /* Animación subrayado */
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 3px;
+      background: #4e73df;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: #4e73df;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #fff;
+      min-width: 180px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #2a2a2a;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #f4f6f9;
+      color: #4e73df;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botones */
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-donar {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 3px 8px rgba(255,107,107,0.4);
+    }
+
+    .btn-donar:hover {
+      background: #ff4d4d;
+      transform: translateY(-2px);
+    }
+
+    .btn-ingresar {
+      background: #4e73df;
+      color: white;
+      box-shadow: 0 3px 8px rgba(78,115,223,0.4);
+    }
+
+    .btn-ingresar:hover {
+      background: #3755c5;
+      transform: translateY(-2px);
+    }
+    
+    :root{
+      --bg:#0a0a0a;
+      --text:#ffffff;
+      --muted:#dbe7ff;
+      --blue:#2d8cff;
+      --blue2:#5aa0ff;
+      --grad: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height: 100vh;
+      overflow:hidden;
+    }
+
+    /* Carrusel de columnas */
+    .carousel{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      display:grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; padding: 16px;
+      z-index:1;
+    }
+    @media (max-width: 1024px){
+      .carousel{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px){
+      .carousel{ grid-template-columns: 1fr; }
+    }
+
+    .column{
+      display:flex; flex-direction:column;
+      position:relative; overflow:hidden;
+    }
+
+    .column-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  will-change: transform;
+}
+
+
+    /* Tarjeta de imagen */
+    .image-card{
+      position:relative; border-radius:20px; overflow:hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      isolation:isolate;
+    }
+    .image-card img{
+      width:100%; height:auto; display:block; object-fit:cover;
+      transform: translateZ(0);
+    }
+    .img-tint{
+      position:absolute; inset:0; background: rgba(0, 123, 255, .35);
+      mix-blend-mode: normal; pointer-events:none;
+    }
+
+    /* Animaciones de desplazamiento infinito */
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    @keyframes scroll-down {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
+    .scroll-up .column-inner{
+      animation: scroll-up 15s linear infinite;
+    }
+    .scroll-down .column-inner{
+      animation: scroll-down 15s linear infinite;
+    }
+
+    /* Tinte global */
+    .global-tint{
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      background:
+        radial-gradient(80% 60% at 50% 50%, rgba(0,102,255,.22) 0%, rgba(0,102,255,.08) 60%, rgba(0,102,255,0) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.25) 100%);
+    }
+
+    /* Textos centrados */
+    .headline{
+      position:absolute; inset:0; z-index:3;
+      display:grid; place-items:center; text-align:center; padding: 20px;
+    }
+    .headline-inner{
+      max-width: 980px; padding: 18px 20px;
+    }
+    .eyebrow{
+      font-size: clamp(12px, 2vw, 14px);
+      color: var(--muted);
+      letter-spacing: .18em;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1.hero-title{
+      font-size: clamp(26px, 5vw, 44px);
+      line-height: 1.15;
+      text-shadow: 0 2px 18px rgba(0,0,0,.35);
+    }
+    .cta-row{
+      margin-top: 18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+    }
+    .btn{
+      border:none; cursor:pointer; font-weight:700; border-radius:12px; padding:12px 16px;
+    }
+    .btn.primary{ background: var(--grad); color:#fff; box-shadow: 0 12px 36px rgba(0, 140, 255, .28); }
+    .btn.ghost{ background: rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.14); }
+
+    /* SECCIÓN QUIÉNES SOMOS */
+.about-us{
+  background:#fff;
+  color:#0a0a0a;
+  padding:100px 20px;
+  overflow:hidden;
+  position:relative;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+}
+
+.about-us .container{
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.about-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+/* Inicial oculto */
+.about-content .about-text,
+.about-content .about-image{
+  opacity:0;
+  transform: scale(0.85) rotateX(10deg) translateY(30px);
+}
+
+/* Animaciones */
+.about-content.animate .about-text{
+  animation: textEnter 1s forwards;
+}
+
+.about-content.animate .about-image{
+  animation: imageEnter 1s forwards;
+  animation-delay: 0.3s;
+}
+
+.about-text{
+  flex:1 1 500px;
+}
+
+.about-text h2{
+  font-size: clamp(43px,4vw,40px);
+  margin-bottom:20px;
+  color:#222;
+  position:relative;
+}
+
+.about-text h2::after{
+  content:'';
+  display:block;
+  width:60px;
+  height:4px;
+  background: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
+  margin-top:10px;
+  border-radius:2px;
+}
+
+.about-text p{
+  font-size:18px;
+  line-height:1.7;
+  color:#555;
+}
+
+/* Imagen más grande y proporcionada */
+.about-image{
+  flex:1 1 500px;
+}
+
+.about-image img{
+  width:100%;
+  max-width:550px;
+  height:auto;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  transition: transform 0.5s ease;
+}
+
+.about-image img:hover{
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* Animaciones keyframes */
+@keyframes textEnter{
+  0%{
+    opacity:0;
+    transform: scale(0.85) rotateX(10deg) translateY(30px);
+  }
+  60%{
+    transform: scale(1.05) rotateX(-5deg) translateY(-10px);
+  }
+  100%{
+    opacity:1;
+    transform: scale(1) rotateX(0deg) translateY(0);
+  }
+}
+
+@keyframes imageEnter{
+  0%{
+    opacity:0;
+    transform: scale(0.85) rotateY(-10deg) translateY(30px);
+  }
+  60%{
+    transform: scale(1.05) rotateY(5deg) translateY(-10px);
+  }
+  100%{
+    opacity:1;
+    transform: scale(1) rotateY(0deg) translateY(0);
+  }
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .about-content{
+    flex-direction:column-reverse;
+    text-align:center;
+    gap:30px;
+  }
+  .about-image img{
+    max-width:100%;
+  }
+}
+:root {
+    --bg: #0a0a0a;
+    --text: #ffffff;
+    --blue: #e8eb4a;
+}
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px 20px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .icon {
+      font-size: 3.5rem;
+      color: var(--blue);
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover .icon {
+      transform: rotate(15deg) scale(1.2);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #d1d1d1;
+    }
+      .animado {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+  }
+
+  .animado.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* 🌍 Estilos sección mapa */
+.mapa-section {
+  position: relative;
+  padding: 100px 20px;
+  background: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.mapa-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 3;
+}
+
+.pin-title {
+  font-size: 2.2rem;
+  color: #2ecc71;
+}
+
+.mapa-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #228028;
+  position: relative;
+}
+
+.mapa-title::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 4px;
+  background: #1e9952;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.mapa-wrapper {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 1s ease;
+  z-index: 2;
+}
+
+.animado.visible .mapa-wrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mapa-wrapper iframe {
+  border-radius: 20px;
+  width: 100%;
+  height: 680px;
+  border: none;
+}
+
+/* Círculos de fondo (detrás del mapa) */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(45, 140, 255, 0.15);
+  animation: float 6s ease-in-out infinite;
+  z-index: 1; /* debajo del mapa */
+}
+
+.circle1 {
+  width: 200px;
+  height: 200px;
+  top: 5%;
+  left: -50px;
+}
+
+.circle2 {
+  width: 150px;
+  height: 150px;
+  bottom: 10%;
+  right: -50px;
+  animation-delay: 2s;
+}
+
+.circle3 {
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  right: 15%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+/* SECCION DE DONACIONES */
+.donate-section {
+  position: relative;
+  padding: 120px 20px;
+  background: #0b1d3a; /* azul oscuro */
+  overflow: hidden;
+  text-align: center;
+  border-radius: 20px;
+  color: #fff;
+}
+
+
+/* Iconos grandes */
+.piggy-left, .piggy-right {
+  position: absolute;
+  width: 220px;
+  opacity: 0.15;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: float 6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.piggy-left { left: 40px; animation-delay: 0s; }
+.piggy-right { right: 40px; animation-delay: 3s; }
+
+/* Contenido centrado */
+.donate-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.donate-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.donate-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 35px;
+  font-weight: 400;
+}
+
+.donate-btn {
+  background: #2eaccc;
+  color: #fff;
+  font-weight: bold;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 20px rgba(46, 204, 191, 0.3);
+  transition: all 0.3s ease;
+}
+
+.donate-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(46, 204, 183, 0.5);
+}
+
+/* Animación flotante de alcancías */
+@keyframes float {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-60%) translateX(10px); }
+}
+
+/* Animación de entrada desde abajo */
+.animado .donate-content {
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+.animado.visible .donate-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+.custom-footer {
+  background-color: #000000; /* azul oscuro */
+  color: #fff;
+  padding: 60px 20px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  max-width: 80px;
+  display: block;
+  margin: auto 0;
+}
+
+.footer-center {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+.footer-center p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.footer-socials a {
+  margin: 0 8px;
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+  color: #2ecc71;
+}
+
+.footer-contact {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-contact h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.footer-contact p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 15px;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-contact {
+    margin-top: 30px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo" />
+    </div>
+
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="dropdown">
+        <a href="becas+.html">Becas +</a>
+        </div>
+      </li>
+      <li><a href="pasantias.html">Pasantías</a></li>
+      <li><a href="practicas.html">Prácticas Profesionales</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      <button class="btn btn-donar">Donar</button>
+      <button class="btn btn-ingresar">Ingresar</button>
+    </div>
+  </nav>
+
+      <!-- HERO con carrusel -->
+  <header class="hero" id="inicio">
+    <div class="carousel">
+      <!-- Col 1 (sube) -->
+      <div class="column scroll-up">
+        <div class="column-inner">
+          <div class="image-card"><img src="imagenes/prueba1.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba2.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba3.jpg"/><div class="img-tint"></div></div>
+          <!-- duplicadas -->
+          <div class="image-card"><img src="imagenes/prueba4.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba5.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba6.jpg"/><div class="img-tint"></div></div>
+        </div>
+      </div>
+
+      <!-- Col 2 (baja) -->
+      <div class="column scroll-down">
+        <div class="column-inner">
+          <div class="image-card"><img src="imagenes/prueba4.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba5.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba6.jpg"/><div class="img-tint"></div></div>
+          <!-- duplicadas -->
+          <div class="image-card"><img src="imagenes/prueba1.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba2.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba3.jpg"/><div class="img-tint"></div></div>
+        </div>
+      </div>
+
+      <!-- Col 3 (sube) -->
+      <div class="column scroll-up">
+        <div class="column-inner">
+          <div class="image-card"><img src="imagenes/prueba7.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba8.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba9.jpg"/><div class="img-tint"></div></div>
+          <!-- duplicadas -->
+          <div class="image-card"><img src="imagenes/prueba10.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba11.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba12.jpg"/><div class="img-tint"></div></div>
+        </div>
+      </div>
+
+      <!-- Col 4 (baja) -->
+      <div class="column scroll-down">
+        <div class="column-inner">
+          <div class="image-card"><img src="imagenes/prueba10.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba11.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba12.jpg"/><div class="img-tint"></div></div>
+          <!-- duplicadas -->
+          <div class="image-card"><img src="imagenes/prueba7.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba8.jpg"/><div class="img-tint"></div></div>
+          <div class="image-card"><img src="imagenes/prueba9.jpg"/><div class="img-tint"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tinte global -->
+    <div class="global-tint" aria-hidden="true"></div>
+
+    <!-- Textos centrados -->
+    <div class="headline">
+      <div class="headline-inner">
+        <h1 class="hero-title">UNIDAD DE BECAS, PASANTIAS Y PRACTICAS PROFESIONALES DE ASONOG </h1>
+        <div class="cta-row">
+          <button class="btn primary">Conoce nuestro impacto</button>
+          <button class="btn ghost">Ver historias</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <!-- SECCIÓN QUIÉNES SOMOS -->
+  <section class="about-us animado">
+    <div class="container animado">
+      <div class="about-content reveal animado">
+        <div class="about-text animado">
+          <h2>¿Quiénes Somos?</h2>
+          <p>La Unidad de becas, pasantías y prácticas profesionales de ASONOG es un espacio estratégico que promueve el desarrollo integral de jóvenes, brindándoles oportunidades para continuar su formación académica, adquirir experiencia práctica y participar activamente en procesos de transformación social.</p>
+        </div>
+        <div class="about-image animado">
+          <img src="imagenes/carrusel13.jpg" alt="Quienes Somos"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title animado">Oportunidades</h2>
+    <div class="cards animado">
+      <div class="card animado">
+        <i class='bx bxs-graduation icon animado'></i>
+        <h3>Becas</h3>
+        <p>Es un programa que promueve el acceso a la educación superior de jóvenes en condiciones de vulnerabilidad, a través de la gestión de programas de becas integrales. El programa de becas ASONOG brinda un acompañamiento académico, psicosocial y formativo, con el objetivo de fortalecer las capacidades personales y profesionales de becarias, becarios y fomentar su compromiso con el desarrollo de sus comunidades. </p>
+      </div>
+      <div class="card animado">
+        <i class='bx bxs-briefcase icon animado'></i>
+        <h3>Pasantías</h3>
+        <p>Es una oportunidad dirigida a estudiantes universitarios o recién egresados para fortalecer sus conocimientos académicos mediante experiencias prácticas, desarrollar habilidades profesionales y vincular el aprendizaje con el servicio social. Los jóvenes forman parte de experiencias formativas que promueven la solidaridad, la participación activa y el liderazgo transformador, contribuyendo así al desarrollo sostenible y al fortalecimiento del tejido social.</p>
+      </div>
+      <div class="card animado">
+        <i class='bx bxs-book-content icon animado'></i>
+        <h3>Prácticas Profesionales</h3>
+        <p>Estas son coordinadas con universidades e instituciones aliadas, facilitando la aplicación de conocimientos en contextos reales, fortaleciendo habilidades y competencias para su inserción laboral y compromiso ciudadano. Las prácticas profesionales son el primer paso para transformar el conocimiento en acción y los sueños en futuro.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mapa-section animado">
+    <div class="mapa-header animado">
+      <span class="pin-title">📍</span>
+      <h2 class="mapa-title">Sembrando oportunidades</h2>
+   </div>
+
+    <!-- Círculos de fondo -->
+    <span class="circle circle1"></span>
+    <span class="circle circle2"></span>
+
+    <div class="mapa-wrapper">
+      <!-- Aquí insertas tu iframe de Datawrapper -->
+      <iframe 
+        src="https://datawrapper.dwcdn.net/1AOsH/7/" 
+        width="100%" 
+        height="600" 
+        style="border: none; border-radius: 20px;">
+      </iframe>
+    </div>
+  </section>
+
+  <section class="donate-section">
+    <!-- Iconos grandes de alcancía -->
+    <img src="imagenes/alcancía png.png" class="piggy-left" alt="Alcancía izquierda">
+    <img src="imagenes/alcancía png.png" class="piggy-right" alt="Alcancía derecha">
+
+    <div class="donate-content animado">
+      <h2 class="donate-title animado">Haz tu donación, cambia una vida.</h2>
+      <p class="donate-subtitle animado">Tú puedes impulsar grandes historias.</p>
+      <button class="donate-btn animado">Donar ahora</button>
+    </div>
+  </section>
+
+  <footer class="custom-footer">
+    <div class="footer-container">
+      <!-- Logo a la izquierda -->
+      <div class="footer-logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo ASONOG">
+      </div>
+
+      <!-- Texto y redes al centro -->
+      <div class="footer-center">
+        <p>La unidad de becas, pasantías y prácticas profesionales de ASONOG apoya a jóvenes agentes de cambio en Honduras para impulsar sueños y transformar territorios.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/ASONOG" class="hover:text-gray-200"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/asonog_honduras/" class="hover:text-gray-200"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/AsonogOficial" class="hover:text-gray-200"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/asonog/" class="hover:text-gray-200"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.tiktok.com/@asonog" class="hover:text-gray-200"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@asonog8695" class="hover:text-gray-200"><i class="fab fa-youtube"></i></a>
+          <a href="https://open.spotify.com/show/6WZ4EBVvxoRgtfxbaNbyEP?si=19546effe2bc469b" class="hover:text-gray-200"><i class="fab fa-spotify"></i></a>
+        </div>
+      </div>
+
+      <!-- Contactos a la derecha -->
+      <div class="footer-contact">
+        <h3>Contáctanos</h3>
+        <p><i class="fas fa-location-dot"></i> ASONOG, Barrio El Calvario, Santa Rosa de Copán, Honduras.</p>
+        <p><i class="fas fa-phone"></i> +504 2662-2626</p>
+        <p><i class="fas fa-envelope"></i> karolina.lara@asonog.hn</p>
+        <p><i class="fas fa-envelope"></i> direccion@asonog.hn</p>
+        <p><i class="fas fa-globe"></i> <a href="https://www.asonog.hn" target="_blank">www.asonog.hn</a></p>
+      </div>
+    </div>
+
+    <!-- Derechos reservados -->
+    <div class="footer-bottom">
+      © 2025 Unidad de Becas ASONOG. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  
+<script>
+// Un solo Observer para todo
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      } else {
+        entry.target.classList.remove("visible"); // Para que reaparezca al bajar/subir
+      }
+    });
+  }, { threshold: 0.2 });
+
+  // Detecta todos los elementos que tengan la clase .animado
+  document.querySelectorAll('.animado').forEach(el => observer.observe(el));
+
+</script>
+
+<script>
+  // Reemplaza animaciones CSS por GSAP
+  gsap.utils.toArray(".column-inner").forEach((col) => {
+    gsap.to(col, {
+      yPercent: col.classList.contains("scroll-up") ? -50 : 50,
+      duration: 15,
+      ease: "linear",
+      repeat: -1
+    });
+  });
+</script>
+
+
+
+
+
+</body>
+</html>

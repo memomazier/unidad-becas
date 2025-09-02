@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingresar - Unidad de Becas ASONOG</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+    .fade-in {
+      animation: fadeIn 1.2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+    <!-- BOTÓN REGRESAR -->
+ <div class="mt-12">
+    <a href="index.html" class="inline-flex items-center px-6 py-3 bg-white text-[#002F6C] font-bold border-2 border-[#002F6C] rounded-full shadow-md hover:bg-[#002F6C] hover:text-white transition duration-300 group">
+      <i class="fas fa-arrow-left mr-2 group-hover:animate-pulse"></i>
+      Regresar al inicio
+    </a>
+  </div>
+  
+
+  <div class="flex-grow flex items-center justify-center p-6">
+    <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-4xl w-full grid md:grid-cols-2 gap-8 fade-in">
+      <!-- Lado izquierdo visual -->
+      <div class="flex flex-col justify-center items-center">
+        <h2 class="text-3xl font-bold text-[#002F6C] text-center">Bienvenido</h2>
+        <p class="text-center text-gray-600">Selecciona tu tipo de acceso para continuar</p>
+      </div>
+
+      <!-- Lado derecho con opciones -->
+      <div class="flex flex-col justify-center space-y-6">
+        <a href="becariologin.html" class="bg-[#002F6C] hover:bg-blue-700 text-white py-4 px-6 rounded-xl text-xl font-semibold text-center shadow-md transition transform hover:scale-105 duration-300">
+          <i class="fas fa-user-graduate mr-2"></i> Ingresar como Becario/Becaria
+        </a>
+        <a href="adminlogin.html" class="bg-[#002F6C] hover:bg-blue-700 text-white py-4 px-6 rounded-xl text-xl font-semibold text-center shadow-md transition transform hover:scale-105 duration-300">
+          <i class="fas fa-user-cog mr-2"></i> Ingresar como Administrador
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-[#002F6C] text-white py-6">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-center md:text-left">&copy; 2025 Unidad de Becas ASONOG. Todos los derechos reservados.</p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="#" class="hover:underline">Política de privacidad</a>
+        <a href="#" class="hover:underline">Términos de uso</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donaciones | Programa de Becas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 60px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo img {
+      height: 80px;   /* ajusta el tamaño del logo */
+      width: auto;    /* mantiene la proporción */
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05); /* un pequeño efecto al pasar el mouse */
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #2a2a2a;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2a2a2a;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    /* Animación subrayado */
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 3px;
+      background: #4e73df;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: #4e73df;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #fff;
+      min-width: 180px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #2a2a2a;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #f4f6f9;
+      color: #4e73df;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botones */
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-donar {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 3px 8px rgba(255,107,107,0.4);
+    }
+
+    .btn-donar:hover {
+      background: #ff4d4d;
+      transform: translateY(-2px);
+    }
+
+    .btn-ingresar {
+      background: #4e73df;
+      color: white;
+      box-shadow: 0 3px 8px rgba(78,115,223,0.4);
+    }
+
+    .btn-ingresar:hover {
+      background: #3755c5;
+      transform: translateY(-2px);
+    }
+    
+    :root{
+      --bg:#0a0a0a;
+      --text:#ffffff;
+      --muted:#dbe7ff;
+      --blue:#2d8cff;
+      --blue2:#5aa0ff;
+      --grad: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+    /* Hero Section */
+.hero {
+  position: relative;
+  height: 60vh; /* no pantalla completa, solo un bloque */
+  background: url("imagenes/carrusel11.jpg") center/cover no-repeat; /* tu imagen de fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Filtro oscuro encima de la imagen */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* filtro oscuro */
+}
+
+/* Contenido del hero */
+.hero-content {
+  position: relative; /* para que quede sobre el filtro */
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Barrita decorativa debajo del título */
+.underline {
+  width: 80px;
+  height: 4px;
+  background-color: #2ecc71; /* color de la barrita */
+  margin: 0 auto 20px auto;
+  border-radius: 2px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    height: 40vh;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+/* Sección de texto e imagen */
+.info-section {
+  padding: 80px 20px;
+  background: #f9f9f9; /* gris claro para contraste */
+  font-family: Arial, sans-serif;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.info-text {
+  flex: 1;
+  min-width: 300px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.info-text p {
+  margin-bottom: 20px;
+}
+
+.info-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.info-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.info-image img:hover {
+  transform: scale(1.05);
+}
+
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 20px;
+      background: #a7c8f3;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .donation-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .donation-header img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+
+    .donation-header h1 {
+    font-size: 3.2rem;       /* Más grande */
+    font-weight: 800;        /* Más negrita */
+    color: #002F6C;          /* Un naranja más fuerte, si quieres que combine */
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+      }
+
+    .donation-header p {
+      font-size: 1.5rem;
+      color: #161616;
+      line-height: 1.6;
+    }
+
+    .donorbox-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    iframe {
+      border: none;
+      max-width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+
+    }
+    .custom-footer {
+  background-color: #000000; /* azul oscuro */
+  color: #fff;
+  padding: 60px 20px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  max-width: 80px;
+  display: block;
+  margin: auto 0;
+}
+
+.footer-center {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+.footer-center p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.footer-socials a {
+  margin: 0 8px;
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+  color: #2ecc71;
+}
+
+.footer-contact {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-contact h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.footer-contact p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 15px;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-contact {
+    margin-top: 30px;
+  }
+}
+  </style>
+</head>
+<body>
+
+ <nav>
+    <div class="logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo" />
+    </div>
+
+    
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="dropdown">
+        <a href="becas+.html">Becas +</a>
+        </div>
+      </li>
+      <li><a href="pasantias.html">Pasantías</a></li>
+      <li><a href="practicas.html">Prácticas Profesionales</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      <a href="donaciones.html" target="blank" class="btn btn-donar">Donar</a>
+      <a href="ingresar.html" target="blank" class="btn btn-ingresar">Ingresar</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>DONACIONES</h1>
+    <div class="underline"></div>
+  </div>
+</section>
+
+  <!-- SECCIÓN DE DONACIONES -->
+ <section class="relative bg-gradient-to-br from-[#002F6C] via-[#004c9d] to-[#0077ff] py-16 px-6 overflow-hidden">
+  
+  <!-- Fondo animado -->
+  <div class="absolute inset-0 opacity-20">
+    <lottie-player 
+      src="https://assets6.lottiefiles.com/packages/lf20_puciaact.json"  
+      background="transparent"  
+      speed="1"  
+      loop  
+      autoplay>
+    </lottie-player>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+    
+    <!-- Texto e imagen -->
+    <div class="text-white space-y-6 animate__animated animate__fadeInLeft">
+      <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">
+        Cambia una vida hoy<br>
+        <span class="text-[#F8B400]">¡Haz tu donación!</span>
+      </h2>
+      <p class="text-lg opacity-90">
+        Cada aporte, grande o pequeño, transforma el futuro de jóvenes talentosos que necesitan una oportunidad. 
+        Con tu ayuda, brindamos educación, esperanza y oportunidades.
+      </p>
+
+      <ul class="space-y-3 text-white/90">
+        <li class="flex items-center"><i class="fas fa-check-circle text-[#F8B400] mr-3"></i>Donaciones 100% seguras y rápidas</li>
+        <li class="flex items-center"><i class="fas fa-check-circle text-[#F8B400] mr-3"></i>Impacto real y comprobable</li>
+        <li class="flex items-center"><i class="fas fa-check-circle text-[#F8B400] mr-3"></i>Recibe actualizaciones de tu aporte</li>
+      </ul>
+
+      <img src="imagenes/crgcLogo.png" alt="ASONOG" class="w-32 mt-6 drop-shadow-lg">
+    </div>
+
+  <!-- Contenedor con centrado interno y tamaño reducido -->
+<div class="bg-white rounded-2xl shadow-2xl p-4 flex justify-center max-w-lg mx-auto animate__animated animate__fadeInRight">
+  <script src="https://donorbox.org/widget.js" paypalExpress="true"></script>
+  <iframe 
+    src="https://donorbox.org/embed/donaciones-794518?" 
+    name="donorbox"
+    allowpaymentrequest="allowpaymentrequest" 
+    seamless="seamless"
+    scrolling="no" 
+    style="width: 420px; height: 700px; border-radius: 12px; border: none;"
+    allow="payment">
+  </iframe>
+</div>
+
+
+
+  </div>
+ </section>
+
+  <footer class="custom-footer">
+    <div class="footer-container">
+      <!-- Logo a la izquierda -->
+      <div class="footer-logo">
+        <img src="imagenes/crgcLogo.png" alt="Logo ASONOG">
+      </div>
+
+      <!-- Texto y redes al centro -->
+      <div class="footer-center">
+        <p>La unidad de becas, pasantías y prácticas profesionales de ASONOG apoya a jóvenes agentes de cambio en Honduras para impulsar sueños y transformar territorios.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/ASONOG" class="hover:text-gray-200"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/asonog_honduras/" class="hover:text-gray-200"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/AsonogOficial" class="hover:text-gray-200"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/asonog/" class="hover:text-gray-200"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.tiktok.com/@asonog" class="hover:text-gray-200"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/@asonog8695" class="hover:text-gray-200"><i class="fab fa-youtube"></i></a>
+          <a href="https://open.spotify.com/show/6WZ4EBVvxoRgtfxbaNbyEP?si=19546effe2bc469b" class="hover:text-gray-200"><i class="fab fa-spotify"></i></a>
+        </div>
+      </div>
+
+      <!-- Contactos a la derecha -->
+      <div class="footer-contact">
+        <h3>Contáctanos</h3>
+        <p><i class="fas fa-location-dot"></i> ASONOG, Barrio El Calvario, Santa Rosa de Copán, Honduras.</p>
+        <p><i class="fas fa-phone"></i> +504 2662-2626</p>
+        <p><i class="fas fa-envelope"></i> karolina.lara@asonog.hn</p>
+        <p><i class="fas fa-envelope"></i> direccion@asonog.hn</p>
+        <p><i class="fas fa-globe"></i> <a href="https://www.asonog.hn" target="_blank">www.asonog.hn</a></p>
+      </div>
+    </div>
+
+    <!-- Derechos reservados -->
+    <div class="footer-bottom">
+      © 2025 Unidad de Becas ASONOG. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll animation
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 10) {
+        navbar.classList.add('shadow-lg');
+      } else {
+        navbar.classList.remove('shadow-lg');
+      }
+    });
+  
+    // Modo oscuro
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const icon = document.getElementById('darkIcon');
+      if (document.body.classList.contains('dark')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+  </script>
+
+</body>
+</html>
