@@ -1,690 +1,714 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unidad de Becas</title>
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xwPpg3fXqL9Lj6cGQ6k4X6cX4i+5SFXQaHfV6+l06e4hDfa5KXrr1bcQy+1kQh4FqNLmK++F2vpu6YmT2oV9dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f6f9;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    body { background: #fff; color: #111; overflow-x: hidden; }
 
     /* NAVBAR */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 60px;
-      background: #ffffff;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
 
-    .logo img {
-      height: 80px;   /* ajusta el tamaño del logo */
-      width: auto;    /* mantiene la proporción */
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .logo img:hover {
-      transform: scale(1.05); /* un pequeño efecto al pasar el mouse */
-    }
-
-    /* Logo */
-    .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: #2a2a2a;
-      letter-spacing: 2px;
-      cursor: pointer;
-    }
-
-    /* Links */
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
-    .nav-links li {
-      position: relative;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #2a2a2a;
-      font-weight: 500;
-      font-size: 1.1rem;
-      padding: 5px 0;
-      transition: color 0.3s ease;
-    }
-
-    /* Animación subrayado */
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 0%;
-      height: 3px;
-      background: #4e73df;
-      transition: width 0.3s ease;
-      border-radius: 2px;
-    }
-
-    .nav-links a:hover {
-      color: #4e73df;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Dropdown */
-    .dropdown {
-      position: relative;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 40px;
-      left: 0;
-      background: #fff;
-      min-width: 180px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 12px 16px;
-      color: #2a2a2a;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-    }
-
-    .dropdown-content a:hover {
-      background: #f4f6f9;
-      color: #4e73df;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Botones */
-    .nav-buttons {
-      display: flex;
-      gap: 15px;
-    }
-
-    .btn {
-      padding: 10px 22px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-donar {
-      background: #ff6b6b;
-      color: white;
-      box-shadow: 0 3px 8px rgba(255,107,107,0.4);
-    }
-
-    .btn-donar:hover {
-      background: #ff4d4d;
-      transform: translateY(-2px);
-    }
-
-    .btn-ingresar {
-      background: #4e73df;
-      color: white;
-      box-shadow: 0 3px 8px rgba(78,115,223,0.4);
-    }
-
-    .btn-ingresar:hover {
-      background: #3755c5;
-      transform: translateY(-2px);
-    }
-    
-    :root{
-      --bg:#0a0a0a;
-      --text:#ffffff;
-      --muted:#dbe7ff;
-      --blue:#2d8cff;
-      --blue2:#5aa0ff;
-      --grad: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
-    }
-
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    body{
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      overflow-x:hidden;
-    }
+    .logo img { height: 40px; }
+    nav a { text-decoration:none; color:#111; margin:0 18px; font-weight:500; transition:color .3s; }
+    nav a:hover { color:#0056d2; }
+    .contact-btn { background:#0056d2; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; }
 
     /* HERO */
-    .hero{
-      position:relative;
-      min-height: 100vh;
-      overflow:hidden;
+    .hero {
+      position: relative; height: 100vh; display:flex; align-items:center; justify-content:space-between; overflow:hidden;
     }
 
-    /* Carrusel de columnas */
-    .carousel{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      display:grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; padding: 16px;
-      z-index:1;
+    .hero-left { position: relative; width: 60%; height: 100%; overflow: hidden; }
+
+    .shape {
+      position: absolute; width:130%; height:130%; transform:rotate(45deg); opacity:0.9; border-radius:40px;
+      transition: transform 1s ease;
     }
-    @media (max-width: 1024px){
-      .carousel{ grid-template-columns: repeat(2, 1fr); }
+    .red { background: linear-gradient(120deg, #f24d2e, #ff7b55); top:35%; left:-45%; z-index:1; }
+    .blue { background: linear-gradient(120deg, #0056d2, #4da3ff); top:60%; left:-30%; z-index:0; }
+
+    .video-wrapper {
+      position:absolute; top:15%; left:10%; width:75%; height:70%; overflow:hidden; border-radius:20px; z-index:2;
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);
     }
-    @media (max-width: 600px){
-      .carousel{ grid-template-columns: 1fr; }
+    .video-wrapper video { width:100%; height:100%; object-fit:cover; }
+
+    /* Lado derecho */
+    .hero-right {
+      position: relative; width: 40%; background:#fff; padding:120px 60px; z-index:3; overflow:hidden;
     }
 
-    .column{
-      display:flex; flex-direction:column;
-      position:relative; overflow:hidden;
+    /* Logo pequeño arriba del texto */
+    .hero-logo {
+      height: 80px;
+      position: absolute;
+      top: -70px;
+      left: 5%;
+      transform: translateX(-50%);
+      margin-bottom: 0;
+      transition: all .8s ease;
+      z-index: 5;
     }
 
-    .column-inner {
+    .hero-right h1 {
+      font-size: 2.6rem; font-weight:700; line-height:1.1; color:#111;
+      margin-top: 100px; margin-bottom:20px;
+      opacity: 1;
+    }
+    .hero-right p {
+      color:#111; font-size:1rem; max-width:350px; opacity: 1;
+    }
+
+    /* CONTENT */
+    .content { background:#f6f6f6; padding:200px 15%; text-align:center; }
+    .content h2 { font-size:2.2rem; margin-bottom:20px; }
+
+  /* -------- SECCIÓN INFORMATIVA -------- */
+  .info-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #ffffff 0%, #f6f6f6 100%);
+    padding: 160px 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Fondo decorativo */
+  .decorations {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(60px);
+    animation: float 8s ease-in-out infinite alternate;
+  }
+
+  .green {
+    background: #00c853;
+    width: 250px;
+    height: 250px;
+    top: 10%;
+    left: 5%;
+  }
+
+  .yellow {
+    background: #ffd600;
+    width: 300px;
+    height: 300px;
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 2s;
+  }
+
+  @keyframes float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(30px); }
+  }
+
+  /* Contenido */
+  .info-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 70px;
+    max-width: 1200px;
+    width: 100%;
+    z-index: 2;
+  }
+
+  .info-text {
+    flex: 1;
+  }
+
+  .info-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #28b124;
+    margin-bottom: 25px;
+    position: relative;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+
+  .info-title::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(90deg, #00c853, #ffd600);
+    border-radius: 10px;
+  }
+
+  .info-desc {
+    color: #333;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  .info-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info-image img {
+    width: 100%;
+    max-width: 480px;
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    transition: transform 0.4s ease;
+  }
+
+  .info-image img:hover {
+    transform: scale(1.07) rotate(2deg);
+  }
+  
+  /* SECCIÓN GRUPOS META*/
+  .grupo-meta {
+    position: relative;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+    padding: 150px 10%;
+    overflow: hidden;
+  }
+
+  /* Fondo decorativo */
+  .decorations-meta {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .shape-meta {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    filter: blur(80px);
+  }
+
+  .green-meta {
+    background: #00c853;
+    width: 400px;
+    height: 400px;
+    top: 5%;
+    left: 5%;
+    animation: floatMeta 8s ease-in-out infinite alternate;
+  }
+
+  .yellow-meta {
+    background: #ffd600;
+    width: 450px;
+    height: 450px;
+    bottom: -5%;
+    right: 5%;
+    animation: floatMeta 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatMeta {
+    from { transform: translateY(0px); }
+    to { transform: translateY(30px); }
+  }
+
+  /* Contenedor principal */
+  .meta-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #111;
+  }
+
+  .meta-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .meta-title::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(90deg, #00c853, #ffd600);
+    border-radius: 10px;
+  }
+
+  .meta-subtitle {
+    max-width: 700px;
+    margin: 30px auto 70px;
+    font-size: 1.15rem;
+    color: #333;
+    line-height: 1.8;
+  }
+
+  /* Grid */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    justify-items: center;
+  }
+
+  /* Tarjetas */
+  .meta-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;
+  min-height: 220px; /* 👈 asegura altura igual */
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  will-change: transform;
-}
-
-
-    /* Tarjeta de imagen */
-    .image-card{
-      position:relative; border-radius:20px; overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      isolation:isolate;
-    }
-    .image-card img{
-      width:100%; height:auto; display:block; object-fit:cover;
-      transform: translateZ(0);
-    }
-    .img-tint{
-      position:absolute; inset:0; background: rgba(0, 123, 255, .35);
-      mix-blend-mode: normal; pointer-events:none;
-    }
-
-    /* Animaciones de desplazamiento infinito */
-    @keyframes scroll-up {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
-    @keyframes scroll-down {
-      0% { transform: translateY(-50%); }
-      100% { transform: translateY(0); }
-    }
-    .scroll-up .column-inner{
-      animation: scroll-up 15s linear infinite;
-    }
-    .scroll-down .column-inner{
-      animation: scroll-down 15s linear infinite;
-    }
-
-    /* Tinte global */
-    .global-tint{
-      position:absolute; inset:0; z-index:2; pointer-events:none;
-      background:
-        radial-gradient(80% 60% at 50% 50%, rgba(0,102,255,.22) 0%, rgba(0,102,255,.08) 60%, rgba(0,102,255,0) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.25) 100%);
-    }
-
-    /* Textos centrados */
-    .headline{
-      position:absolute; inset:0; z-index:3;
-      display:grid; place-items:center; text-align:center; padding: 20px;
-    }
-    .headline-inner{
-      max-width: 980px; padding: 18px 20px;
-    }
-    .eyebrow{
-      font-size: clamp(12px, 2vw, 14px);
-      color: var(--muted);
-      letter-spacing: .18em;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    h1.hero-title{
-      font-size: clamp(26px, 5vw, 44px);
-      line-height: 1.15;
-      text-shadow: 0 2px 18px rgba(0,0,0,.35);
-    }
-    .cta-row{
-      margin-top: 18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
-    }
-    .btn{
-      border:none; cursor:pointer; font-weight:700; border-radius:12px; padding:12px 16px;
-    }
-    .btn.primary{ background: var(--grad); color:#fff; box-shadow: 0 12px 36px rgba(0, 140, 255, .28); }
-    .btn.ghost{ background: rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.14); }
-
-    /* SECCIÓN QUIÉNES SOMOS */
-.about-us{
-  background:#fff;
-  color:#0a0a0a;
-  padding:100px 20px;
-  overflow:hidden;
-  position:relative;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-}
-
-.about-us .container{
-  max-width:1200px;
-  margin:0 auto;
-}
-
-.about-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:40px;
-  flex-wrap:wrap;
-}
-
-/* Inicial oculto */
-.about-content .about-text,
-.about-content .about-image{
-  opacity:0;
-  transform: scale(0.85) rotateX(10deg) translateY(30px);
-}
-
-/* Animaciones */
-.about-content.animate .about-text{
-  animation: textEnter 1s forwards;
-}
-
-.about-content.animate .about-image{
-  animation: imageEnter 1s forwards;
-  animation-delay: 0.3s;
-}
-
-.about-text{
-  flex:1 1 500px;
-}
-
-.about-text h2{
-  font-size: clamp(43px,4vw,40px);
-  margin-bottom:20px;
-  color:#222;
-  position:relative;
-}
-
-.about-text h2::after{
-  content:'';
-  display:block;
-  width:60px;
-  height:4px;
-  background: linear-gradient(90deg, #00b7ff, #397dff, #7a5cff);
-  margin-top:10px;
-  border-radius:2px;
-}
-
-.about-text p{
-  font-size:18px;
-  line-height:1.7;
-  color:#555;
-}
-
-/* Imagen más grande y proporcionada */
-.about-image{
-  flex:1 1 500px;
-}
-
-.about-image img{
-  width:100%;
-  max-width:550px;
-  height:auto;
-  object-fit:cover;
-  border-radius:20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  transition: transform 0.5s ease;
-}
-
-.about-image img:hover{
-  transform: translateY(-10px) scale(1.02);
-}
-
-/* Animaciones keyframes */
-@keyframes textEnter{
-  0%{
-    opacity:0;
-    transform: scale(0.85) rotateX(10deg) translateY(30px);
-  }
-  60%{
-    transform: scale(1.05) rotateX(-5deg) translateY(-10px);
-  }
-  100%{
-    opacity:1;
-    transform: scale(1) rotateX(0deg) translateY(0);
-  }
-}
-
-@keyframes imageEnter{
-  0%{
-    opacity:0;
-    transform: scale(0.85) rotateY(-10deg) translateY(30px);
-  }
-  60%{
-    transform: scale(1.05) rotateY(5deg) translateY(-10px);
-  }
-  100%{
-    opacity:1;
-    transform: scale(1) rotateY(0deg) translateY(0);
-  }
-}
-
-/* Responsive */
-@media(max-width:900px){
-  .about-content{
-    flex-direction:column-reverse;
-    text-align:center;
-    gap:30px;
-  }
-  .about-image img{
-    max-width:100%;
-  }
-}
-:root {
-    --bg: #0a0a0a;
-    --text: #ffffff;
-    --blue: #e8eb4a;
-}
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      margin-bottom: 50px;
-      color: var(--blue);
-      font-weight: 600;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 40px 20px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      opacity: 0;
-      transform: translateY(80px);
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.8s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    .icon {
-      font-size: 3.5rem;
-      color: var(--blue);
-      margin-bottom: 20px;
-      display: inline-block;
-      transition: transform 0.6s ease;
-    }
-
-    .card:hover .icon {
-      transform: rotate(15deg) scale(1.2);
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      font-weight: 600;
-    }
-
-    .card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #d1d1d1;
-    }
-      .animado {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease;
-  }
-
-  .animado.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* 🌍 Estilos sección mapa */
-.mapa-section {
-  position: relative;
-  padding: 100px 20px;
-  background: #fff;
-  text-align: center;
-  overflow: hidden;
-}
-
-.mapa-header {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 30px;
+  align-items: center;
+  text-align: center;
   position: relative;
-  z-index: 3;
-}
-
-.pin-title {
-  font-size: 2.2rem;
-  color: #2ecc71;
-}
-
-.mapa-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #228028;
-  position: relative;
-}
-
-.mapa-title::after {
-  content: "";
-  display: block;
-  width: 60%;
-  height: 4px;
-  background: #1e9952;
-  margin: 8px auto 0;
-  border-radius: 2px;
-}
-
-.mapa-wrapper {
-  position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-  transform: translateY(50px);
-  opacity: 0;
-  transition: all 1s ease;
-  z-index: 2;
 }
 
-.animado.visible .mapa-wrapper {
-  transform: translateY(0);
-  opacity: 1;
+  .meta-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,200,83,0.15), rgba(255,214,0,0.15));
+    transition: 0.5s;
+  }
+
+  .meta-card:hover::before {
+    left: 0;
+  }
+
+  .meta-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+  }
+
+  .meta-card .icon {
+  font-size: 2.2rem;
+  color: #00c853;
+  margin-bottom: 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.mapa-wrapper iframe {
-  border-radius: 20px;
-  width: 100%;
-  height: 680px;
-  border: none;
+.meta-card:hover .icon {
+  color: #ffd600;
+  transform: scale(1.2);
 }
 
-/* Círculos de fondo (detrás del mapa) */
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(45, 140, 255, 0.15);
-  animation: float 6s ease-in-out infinite;
-  z-index: 1; /* debajo del mapa */
+  .meta-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  /* SECCION DE OPORTUNIDADES */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
-.circle1 {
-  width: 200px;
-  height: 200px;
-  top: 5%;
-  left: -50px;
-}
-
-.circle2 {
-  width: 150px;
-  height: 150px;
-  bottom: 10%;
-  right: -50px;
-  animation-delay: 2s;
-}
-
-.circle3 {
-  width: 100px;
-  height: 100px;
-  top: 50%;
-  right: 15%;
-  animation-delay: 4s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-/* SECCION DE DONACIONES */
-.donate-section {
+.oportunidades-section {
+  padding: 100px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
   position: relative;
-  padding: 120px 20px;
-  background: #0b1d3a; /* azul oscuro */
+  overflow: hidden;
+}
+
+.titulo-oportunidades {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00c853;
+  margin-bottom: 70px;
+  position: relative;
+  animation: fadeDown 1s ease forwards;
+}
+
+.oportunidades-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  position: relative;
+}
+
+.o-card {
+  width: 320px;
+  min-height: 280px;
+  border-radius: 25px;
+  color: white;
+  padding: 40px 30px;
+  position: relative;
   overflow: hidden;
   text-align: center;
-  border-radius: 20px;
-  color: #fff;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+  transition: transform 0.5s ease, box-shadow 0.4s ease;
+  cursor: pointer;
 }
 
-
-/* Iconos grandes */
-.piggy-left, .piggy-right {
-  position: absolute;
-  width: 220px;
-  opacity: 0.15;
-  top: 50%;
-  transform: translateY(-50%);
-  animation: float 6s ease-in-out infinite;
-  z-index: 1;
-}
-
-.piggy-left { left: 40px; animation-delay: 0s; }
-.piggy-right { right: 40px; animation-delay: 3s; }
-
-/* Contenido centrado */
-.donate-content {
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.donate-title {
-  font-size: 2.8rem;
-  font-weight: 900;
+.o-card h3 {
+  font-size: 1.6rem;
   margin-bottom: 15px;
 }
 
-.donate-subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 35px;
-  font-weight: 400;
+.o-card p {
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.6;
 }
 
-.donate-btn {
-  background: #2eaccc;
-  color: #fff;
-  font-weight: bold;
-  padding: 16px 36px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  box-shadow: 0 8px 20px rgba(46, 204, 191, 0.3);
-  transition: all 0.3s ease;
+.o-card .icono {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-.donate-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 28px rgba(46, 204, 183, 0.5);
+.card-becas {
+  background: linear-gradient(135deg, #00c853, #aeea00);
+  animation: float1 5s ease-in-out infinite;
 }
 
-/* Animación flotante de alcancías */
-@keyframes float {
-  0%, 100% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-60%) translateX(10px); }
+.card-pasantias {
+  background: linear-gradient(135deg, #ffd600, #ffab00);
+  animation: rotateY 6s ease-in-out infinite;
 }
 
-/* Animación de entrada desde abajo */
-.animado .donate-content {
-  transform: translateY(50px);
+.card-practicas {
+  background: linear-gradient(135deg, #00bfa5, #64ffda);
+  animation: float2 5.5s ease-in-out infinite;
+}
+
+.o-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+}
+
+/* Animaciones */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(10px); }
+}
+
+@keyframes rotateY {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(10deg); }
+}
+/* Animaciones de entrada al hacer scroll */
+.o-card {
   opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.o-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-becas.visible {
+  transition-delay: 0.1s;
+}
+
+.card-pasantias.visible {
+  transition-delay: 0.3s;
+}
+
+.card-practicas.visible {
+  transition-delay: 0.5s;
+}
+
+/* 🔥 SECCIÓN LOGROS */
+.achievements {
+  background: linear-gradient(180deg, #ffffff, #f8f8f8);
+  padding: 180px 10%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.achievements-title {
+  font-size: 3rem;
+  color: #111;
+  margin-bottom: 80px;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.achievements-title::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 5px;
+  background: linear-gradient(90deg, #00a86b, #ffd700);
+  border-radius: 5px;
+}
+
+.achievements-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 50px;
+}
+
+.achievement-item {
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  padding: 50px 25px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1s ease;
+  border-top: 6px solid #00a86b;
+}
+
+.achievement-item h3 {
+  color: #111;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.achievement-item p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* Efecto de brillo decorativo */
+.achievement-item::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.15);
+  transform: rotate(45deg);
+  transition: 0.6s;
+}
+
+.achievement-item:hover::before {
+  top: 100%;
+  left: 100%;
+}
+
+/* Animaciones al entrar */
+.a-left.visible { opacity: 1; transform: translateX(0) scale(1); }
+.a-top.visible { opacity: 1; transform: translateY(0) scale(1); }
+.a-right.visible { opacity: 1; transform: translateX(0) scale(1); }
+.a-bottom.visible { opacity: 1; transform: translateY(0) scale(1); }
+.a-zoom.visible { opacity: 1; transform: scale(1); }
+
+.a-left { transform: translateX(-100px) scale(0.8); }
+.a-top { transform: translateY(-100px) scale(0.8); }
+.a-right { transform: translateX(100px) scale(0.8); }
+.a-bottom { transform: translateY(100px) scale(0.8); }
+.a-zoom { transform: scale(0.3); }
+
+
+/* 🌍 SECCIÓN MAPA */
+.map-section {
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
+  padding: 120px 10%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.map-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,168,107,0.05), transparent 70%);
+  animation: pulse 8s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+.map-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(40px);
   transition: all 1s ease;
 }
-.animado.visible .donate-content {
-  transform: translateY(0);
-  opacity: 1;
+
+.map-frame-container {
+  position: relative;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1.2s ease;
+  background: white;
+  border: 5px solid #00a86b25;
 }
+
+.map-frame-container::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(120deg, rgba(255,215,0,0.1), rgba(0,168,107,0.1));
+  pointer-events: none;
+}
+
+/* Animaciones al aparecer */
+.map-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.map-frame-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 💛 SECCIÓN DONACIÓN */
+.donacion {
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 25px;
+  margin: 120px 10%;
+  background: #0c0c0c;
+  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+}
+
+/* Fondo animado */
+.donacion-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, #00ff99, #f2c94c, #00ff99, #f2c94c);
+  background-size: 400% 400%;
+  opacity: 0.15;
+  z-index: 1;
+  filter: blur(30px);
+}
+
+/* Contenido */
+.donacion-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  color: #fff;
+  animation: flotar 4s ease-in-out infinite alternate;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(10px); }
+}
+
+.titulo-donacion {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #00ff99, #f2c94c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.subtexto-donacion {
+  font-size: 1.2rem;
+  color: #ddd;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+/* Botón brillante */
+.donar-btn {
+  background: linear-gradient(90deg, #00ff99, #f2c94c);
+  color: #111;
+  border: none;
+  padding: 14px 45px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0,255,153,0.4);
+  transition: all 0.4s ease;
+}
+
+.donar-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255,255,255,0.5);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.donar-btn:hover::before {
+  left: 150%;
+}
+
+.donar-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 40px rgba(0,255,153,0.8);
+}
+
+/* SECCION DEL FOOTER */
 .custom-footer {
   background-color: #000000; /* azul oscuro */
   color: #fff;
@@ -770,171 +794,348 @@
   }
 }
 
+/* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 60px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      font-weight: 900;
+    }
+
+    .logo img {
+      height: 100px;   /* ajusta el tamaño del logo */
+      width: auto;    /* mantiene la proporción */
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05); /* un pequeño efecto al pasar el mouse */
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #2a2a2a;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2a2a2a;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    /* Animación subrayado */
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 3px;
+      background: #4e73df;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: #4e73df;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #ffffff;
+      min-width: 180px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #2a2a2a;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #f4f6f9;
+      color: #4e73df;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botones */
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-donar {
+      background: #eef124;
+      color: white;
+      box-shadow: 0 3px 8px rgba(128, 126, 126, 0.4);
+    }
+
+    .btn-donar:hover {
+      background: #ebe831;
+      transform: translateY(-2px);
+    }
+
+    .btn-ingresar {
+      background: #36b916;
+      color: white;
+      box-shadow: 0 3px 8px rgba(109, 109, 109, 0.4);
+    }
+
+    .btn-ingresar:hover {
+      background: #35bd23;
+      transform: translateY(-2px);
+    }
 </style>
 </head>
 <body>
+  <!-- NAVBAR -->
+    <nav>
 
-  <nav>
-    <div class="logo">
-        <img src="imagenes/crgcLogo.png" alt="Logo" />
-    </div>
-
-    
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
       <li class="dropdown">
-        <a href="becas+.html">Becas +</a>
+        <a href="becas+.html">Becas</a>
         </div>
       </li>
-      <li><a href="pasantias.html">Pasantías</a></li>
+      <li><a href="pasantias.html">Pasantías y Voluntariado</a></li>
       <li><a href="practicas.html">Prácticas Profesionales</a></li>
+      <li><a href="...">Vinculación Laboral</a></li>
     </ul>
 
     <div class="nav-buttons">
-      <button class="btn btn-donar">Donar</button>
-      <button class="btn btn-ingresar">Ingresar</button>
+      <button class="btn btn-donar" onclick="window.location.href='donaciones.html'">Donar</button>
+      <button class="btn btn-ingresar" onclick="window.location.href='ingresar.html'">Ingresar</button>
     </div>
   </nav>
 
-      <!-- HERO con carrusel -->
-  <header class="hero" id="inicio">
-    <div class="carousel">
-      <!-- Col 1 (sube) -->
-      <div class="column scroll-up">
-        <div class="column-inner">
-          <div class="image-card"><img src="imagenes/prueba1.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba2.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba3.jpg"/><div class="img-tint"></div></div>
-          <!-- duplicadas -->
-          <div class="image-card"><img src="imagenes/prueba4.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba5.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba6.jpg"/><div class="img-tint"></div></div>
-        </div>
-      </div>
-
-      <!-- Col 2 (baja) -->
-      <div class="column scroll-down">
-        <div class="column-inner">
-          <div class="image-card"><img src="imagenes/prueba4.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba5.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba6.jpg"/><div class="img-tint"></div></div>
-          <!-- duplicadas -->
-          <div class="image-card"><img src="imagenes/prueba1.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba2.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba3.jpg"/><div class="img-tint"></div></div>
-        </div>
-      </div>
-
-      <!-- Col 3 (sube) -->
-      <div class="column scroll-up">
-        <div class="column-inner">
-          <div class="image-card"><img src="imagenes/prueba7.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba8.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba9.jpg"/><div class="img-tint"></div></div>
-          <!-- duplicadas -->
-          <div class="image-card"><img src="imagenes/prueba10.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba11.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba12.jpg"/><div class="img-tint"></div></div>
-        </div>
-      </div>
-
-      <!-- Col 4 (baja) -->
-      <div class="column scroll-down">
-        <div class="column-inner">
-          <div class="image-card"><img src="imagenes/prueba10.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba11.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba12.jpg"/><div class="img-tint"></div></div>
-          <!-- duplicadas -->
-          <div class="image-card"><img src="imagenes/prueba7.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba8.jpg"/><div class="img-tint"></div></div>
-          <div class="image-card"><img src="imagenes/prueba9.jpg"/><div class="img-tint"></div></div>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="shape red"></div>
+      <div class="shape blue"></div>
+      <div class="video-wrapper">
+        <video src="imagenes/video 1.mp4" autoplay muted loop playsinline></video>
       </div>
     </div>
 
-    <!-- Tinte global -->
-    <div class="global-tint" aria-hidden="true"></div>
-
-    <!-- Textos centrados -->
-    <div class="headline">
-      <div class="headline-inner">
-        <h1 class="hero-title">UNIDAD DE BECAS, PASANTIAS Y PRACTICAS PROFESIONALES DE ASONOG </h1>
-        <div class="cta-row">
-          <button class="btn primary">Conoce nuestro impacto</button>
-          <button class="btn ghost">Ver historias</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-    <!-- SECCIÓN QUIÉNES SOMOS -->
-  <section class="about-us animado">
-    <div class="container animado">
-      <div class="about-content reveal animado">
-        <div class="about-text animado">
-          <h2>¿Quiénes Somos?</h2>
-          <p>La Unidad de becas, pasantías y prácticas profesionales de ASONOG es un espacio estratégico que promueve el desarrollo integral de jóvenes, brindándoles oportunidades para continuar su formación académica, adquirir experiencia práctica y participar activamente en procesos de transformación social.</p>
-        </div>
-        <div class="about-image animado">
-          <img src="imagenes/carrusel13.jpg" alt="Quienes Somos"/>
-        </div>
-      </div>
+    <div class="hero-right">
+      <img src="imagenes/crgcLogo.png" alt="Logo" class="hero-logo main-logo" />
+      <h1>
+        UNIDAD DE BECAS,<br>
+        PASANTIAS,<br>
+        Y PRACTICAS<br>
+        PROFESIONALES<br>
+        DE ASONOG
+      </h1>
+      <p></p>
     </div>
   </section>
 
-  <section>
-    <h2 class="section-title animado">Oportunidades</h2>
-    <div class="cards animado">
-      <div class="card animado">
-        <i class='bx bxs-graduation icon animado'></i>
-        <h3>Becas</h3>
-        <p>Es un programa que promueve el acceso a la educación superior de jóvenes en condiciones de vulnerabilidad, a través de la gestión de programas de becas integrales. El programa de becas ASONOG brinda un acompañamiento académico, psicosocial y formativo, con el objetivo de fortalecer las capacidades personales y profesionales de becarias, becarios y fomentar su compromiso con el desarrollo de sus comunidades. </p>
+  
+  <!-- SECCIÓN INFORMATIVA -->
+<section class="info-section">
+  <div class="decorations">
+    <div class="circle green"></div>
+    <div class="circle yellow"></div>
+  </div>
+
+  <div class="info-container">
+    <div class="info-text">
+      <h2 class="info-title">¿Quiénes Somos?</h2>
+      <p class="info-desc">
+        La Unidad de becas, pasantías y prácticas profesionales de ASONOG es un espacio estratégico que promueve el desarrollo integral de jóvenes, brindándoles 
+        oportunidades para continuar su formación académica, adquirir experiencia práctica y participar activamente en procesos de transformación social.
+      </p>
+    </div>
+    <div class="info-image">
+      <img src="imagenes/carrusel12.jpg" alt="Education Image" />
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN GRUPO META -->
+<section class="grupo-meta">
+  <div class="decorations-meta">
+    <div class="shape-meta green-meta"></div>
+    <div class="shape-meta yellow-meta"></div>
+  </div>
+
+  <div class="meta-container">
+    <h2 class="meta-title">Grupo Meta</h2>
+    <p class="meta-subtitle">
+      Nuestros esfuerzos están dirigidos a apoyar a diversos grupos en situación de vulnerabilidad,
+      fomentando la inclusión, la igualdad y las oportunidades para todos.
+    </p>
+
+    <div class="meta-grid">
+      <div class="meta-card">
+        <i class="fa-solid fa-person-breastfeeding icon"></i>
+        <h3>Madres Solteras</h3>
       </div>
-      <div class="card animado">
-        <i class='bx bxs-briefcase icon animado'></i>
-        <h3>Pasantías</h3>
-        <p>Es una oportunidad dirigida a estudiantes universitarios o recién egresados para fortalecer sus conocimientos académicos mediante experiencias prácticas, desarrollar habilidades profesionales y vincular el aprendizaje con el servicio social. Los jóvenes forman parte de experiencias formativas que promueven la solidaridad, la participación activa y el liderazgo transformador, contribuyendo así al desarrollo sostenible y al fortalecimiento del tejido social.</p>
+      <div class="meta-card">
+        <i class="fa-solid fa-venus icon"></i>
+        <h3>Mujeres Víctimas de Violencia</h3>
       </div>
-      <div class="card animado">
-        <i class='bx bxs-book-content icon animado'></i>
-        <h3>Prácticas Profesionales</h3>
-        <p>Estas son coordinadas con universidades e instituciones aliadas, facilitando la aplicación de conocimientos en contextos reales, fortaleciendo habilidades y competencias para su inserción laboral y compromiso ciudadano. Las prácticas profesionales son el primer paso para transformar el conocimiento en acción y los sueños en futuro.</p>
+      <div class="meta-card">
+        <i class="fa-solid fa-user-graduate icon"></i>
+        <h3>Jóvenes Vulnerables</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-plane-departure icon"></i>
+        <h3>Jóvenes Migrantes</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-house-chimney-crack icon"></i>
+        <h3>Desplazados Internos</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-hand-fist icon"></i>
+        <h3>Afrodescendientes</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-wheelchair icon"></i>
+        <h3>Personas con Discapacidad</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-people-roof icon"></i>
+        <h3>Pueblos Originarios</h3>
+      </div>
+      <div class="meta-card">
+        <i class="fa-solid fa-globe icon"></i>
+        <h3>Otros</h3>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="mapa-section animado">
-    <div class="mapa-header animado">
-      <span class="pin-title">📍</span>
-      <h2 class="mapa-title">Sembrando oportunidades</h2>
-   </div>
-
-    <!-- Círculos de fondo -->
-    <span class="circle circle1"></span>
-    <span class="circle circle2"></span>
-
-    <div class="mapa-wrapper">
-      <!-- Aquí insertas tu iframe de Datawrapper -->
-      <iframe 
-        src="https://datawrapper.dwcdn.net/1AOsH/7/" 
-        width="100%" 
-        height="600" 
-        style="border: none; border-radius: 20px;">
-      </iframe>
+<!-- SECCIÓN DE OPORTUNIDADES -->
+ <section class="oportunidades-section">
+  <h2 class="titulo-oportunidades">Oportunidades</h2>
+  
+  <div class="oportunidades-grid">
+    <div class="o-card card-becas">
+      <div class="icono">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <h3>Becas</h3>
+      <p>Este programa promueve el acceso a la educación superior de jóvenes en condiciones de vulnerabilidad brindando un acompañamiento académico, psicosocial y formativo, con el objetivo de fortalecer las capacidades personales y profesionales de becarias, becarios y fomentar su compromiso con el desarrollo de sus comunidades.</p>
     </div>
-  </section>
 
-  <section class="donate-section">
-    <!-- Iconos grandes de alcancía -->
-    <img src="imagenes/alcancía png.png" class="piggy-left" alt="Alcancía izquierda">
-    <img src="imagenes/alcancía png.png" class="piggy-right" alt="Alcancía derecha">
-
-    <div class="donate-content animado">
-      <h2 class="donate-title animado">Haz tu donación, cambia una vida.</h2>
-      <p class="donate-subtitle animado">Tú puedes impulsar grandes historias.</p>
-      <button class="donate-btn animado">Donar ahora</button>
+    <div class="o-card card-pasantias">
+      <div class="icono">
+        <i class="fa-solid fa-briefcase"></i>
+      </div>
+      <h3>Pasantías y Voluntariados</h3>
+      <p>Es una oportunidad dirigida a estudiantes universitarios o recién egresados para fortalecer sus conocimientos académicos mediante experiencias prácticas, desarrollar habilidades profesionales y vincular el aprendizaje con el servicio social.</p>
     </div>
-  </section>
+
+    <div class="o-card card-practicas">
+      <div class="icono">
+        <i class="fa-solid fa-gears"></i>
+      </div>
+      <h3>Prácticas Profesionales</h3>
+      <p>Estas son coordinadas con universidades e instituciones aliadas, facilitando la aplicación de conocimientos en contextos reales, fortaleciendo habilidades y competencias para su inserción laboral y compromiso ciudadano.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 🔥 SECCIÓN LOGROS -->
+<section class="achievements" id="achievements">
+  <h2 class="achievements-title">Nuestros Logros</h2>
+  <div class="achievements-wrapper">
+    <div class="achievement-item a-left">
+      <h3></h3>
+      <p>Fomento y acceso a la salud mental y el empoderamiento de lideresas y líderes comunitarios.</p>
+    </div>
+    <div class="achievement-item a-top">
+      <h3></h3>
+      <p>Intercambio de conocimientos, experiencias y buenas prácticas entre las becarias y becarios.</p>
+    </div>
+    <div class="achievement-item a-right">
+      <h3></h3>
+      <p>Reducción de la desigualdad económica y social.</p>
+    </div>
+    <div class="achievement-item a-bottom">
+      <h3></h3>
+      <p>Espacios de incidencia en la defensa de los derechos humanos, cambio social, política, medio ambiente, género.</p>
+    </div>
+    <div class="achievement-item a-zoom">
+      <h3></h3>
+      <p>Mejora de las condiciones de vida de las comunidades.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 💚 SECCIÓN DE DONACIÓN -->
+<section class="donacion" id="donacion">
+  <div class="donacion-overlay"></div>
+  <div class="donacion-content">
+    <h2 class="titulo-donacion">Haz tu donación, cambia una vida.</h2>
+    <p class="subtexto-donacion">Tú puedes impulsar grandes historias.</p>
+    <button class="donar-btn" onclick="window.location.href='donaciones.html'">Donar ahora</button>
+  </div>
+</section>
 
   <footer class="custom-footer">
     <div class="footer-container">
@@ -974,39 +1175,261 @@
     </div>
   </footer>
 
-  
+
 <script>
-// Un solo Observer para todo
-  const observer = new IntersectionObserver((entries) => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Expansión del video
+    gsap.to(".video-wrapper", {
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        pin: true,
+      },
+      width: "100%",
+      height: "100%",
+      top: "0%",
+      left: "0%",
+      borderRadius: "0px",
+    });
+
+    // Movimiento sutil de las formas
+    gsap.to(".red", {
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      top: "20%",
+      left: "-30%",
+    });
+    gsap.to(".blue", {
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      top: "70%",
+      left: "-10%",
+    });
+
+    // Hacer crecer y centrar el logo
+    gsap.to(".main-logo", {
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top 40%",
+        end: "bottom top",
+        scrub: true,
+      },
+      scale: 3,
+      xPercent: -50,
+      yPercent: -50,
+      left: "50%",
+      top: "50%",
+      position: "absolute",
+      ease: "power2.out",
+    });
+
+    // 💨 Texto visible al inicio pero se desvanece inmediatamente al hacer scroll
+    ScrollTrigger.create({
+      start: 0,
+      end: 150, // cuando el scroll llega a 150px
+      onUpdate: (self) => {
+        const progress = self.progress;
+        gsap.to([".hero-right h1", ".hero-right p"], {
+          opacity: 1 - progress * 2, // desaparece rápido
+          overwrite: "auto"
+        });
+      }
+    });
+
+    // 🔥 SECCION INFORMATIVA
+    // Registrar ScrollTrigger si aún no lo está
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Título con rebote
+  gsap.from(".info-title", {
+    opacity: 0,
+    y: -60,
+    duration: 1.2,
+    ease: "bounce.out",
+    scrollTrigger: {
+      trigger: ".info-title",
+      start: "top 85%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Texto con fade suave
+  gsap.from(".info-desc", {
+    opacity: 0,
+    y: 40,
+    duration: 1,
+    delay: 0.2,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".info-desc",
+      start: "top 85%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Imagen con rotación y escala
+  gsap.from(".info-image", {
+    opacity: 0,
+    scale: 0.8,
+    rotation: -10,
+    duration: 1.3,
+    ease: "elastic.out(1, 0.6)",
+    scrollTrigger: {
+      trigger: ".info-image",
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // SECCION GRUPO META
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animar título
+  gsap.from(".meta-title", {
+    opacity: 0,
+    y: -50,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".meta-title",
+      start: "top 90%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Subtítulo
+  gsap.from(".meta-subtitle", {
+    opacity: 0,
+    y: 40,
+    duration: 1,
+    delay: 0.2,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".meta-subtitle",
+      start: "top 90%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Animaciones individuales para cada card (efecto rotación + fade + escala)
+  gsap.utils.toArray(".meta-card").forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 60,
+      rotation: i % 2 === 0 ? -5 : 5,
+      scale: 0.9,
+      duration: 1,
+      delay: i * 0.1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+  });
+
+  // SECCION DE OPORTUNIDADES
+  document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".o-card");
+
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-      } else {
-        entry.target.classList.remove("visible"); // Para que reaparezca al bajar/subir
       }
     });
   }, { threshold: 0.2 });
 
-  // Detecta todos los elementos que tengan la clase .animado
-  document.querySelectorAll('.animado').forEach(el => observer.observe(el));
+  cards.forEach(card => observer.observe(card));
+});
 
-</script>
-
-<script>
-  // Reemplaza animaciones CSS por GSAP
-  gsap.utils.toArray(".column-inner").forEach((col) => {
-    gsap.to(col, {
-      yPercent: col.classList.contains("scroll-up") ? -50 : 50,
-      duration: 15,
-      ease: "linear",
-      repeat: -1
+// SECCION DE LOGROS
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".achievement-item");
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
     });
+  }, { threshold: 0.3 });
+
+  items.forEach(item => observer.observe(item));
+});
+
+// SECCION DEL MAPA
+document.addEventListener("DOMContentLoaded", () => {
+  const mapElements = document.querySelectorAll(".map-title, .map-frame-container");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.3 });
+
+  mapElements.forEach(el => observer.observe(el));
+});
+
+// SECCIÓN DE DONACIÓN
+// Entrada espectacular de los elementos
+  gsap.from(".titulo-donacion", {
+    scrollTrigger: {
+      trigger: ".donacion",
+      start: "top 85%",
+      toggleActions: "play none none reverse",
+    },
+    y: -150,
+    opacity: 0,
+    duration: 1.5,
+    ease: "elastic.out(1, 0.6)"
   });
-</script>
 
+  gsap.from(".subtexto-donacion", {
+    scrollTrigger: {
+      trigger: ".donacion",
+      start: "top 85%",
+    },
+    y: 150,
+    opacity: 0,
+    delay: 0.3,
+    duration: 1.2,
+    ease: "back.out(1.7)"
+  });
 
+  gsap.from(".donar-btn", {
+    scrollTrigger: {
+      trigger: ".donacion",
+      start: "top 85%",
+    },
+    scale: 0,
+    opacity: 0,
+    delay: 0.6,
+    duration: 1.2,
+    ease: "elastic.out(1, 0.6)"
+  });
 
-
-
+  // Fondo dinámico con movimiento
+  gsap.to(".donacion-overlay", {
+    backgroundPosition: "400% 0%",
+    duration: 15,
+    repeat: -1,
+    ease: "linear"
+  });
+  </script>
 </body>
 </html>
